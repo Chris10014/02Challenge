@@ -1,35 +1,32 @@
 
-const ListComponent = ( { selectedRessource, setRessource }) => {
-  
-  return (
-   <> 
+const ListComponent = ({ items, ressource, setRessource }) => {
+return (
+  <div>
     <button 
-      role="button"
-      onClick={() => setRessource("users")}
-    >Users
+    className={ressource === "users" ? "selected" : null}
+    onClick={() => setRessource("users")}
+    type="button">
+      users
     </button>
-    <button
-      role="button"
-      onClick={() => setRessource("post")}
-    >Posts
+    <button 
+    className={ressource === "posts" ? "selected" : null}
+    onClick={() => setRessource("posts")}
+    type="button">
+      posts
     </button>
-    <button
-      role="button"
-      onClick={() => setRessource("comments")}
-    >Comments
+    <button 
+    className={ressource === "comments" ? "selected" : null}
+    onClick={() => setRessource("comments")}
+    type="button">
+      comments
     </button>
-    </>
-    {selectedRessource.length ? selectedRessource.map((item) => {
-      return (
-      <ul>
-        {JSON.stringify(item)}
-       </ul>
-      )    
-    : null
-    })}
-    
-
-  );
+    <ul>
+        {(items).map(item => (       
+            <li key={item.id}>{JSON.stringify(item)}</li>         
+        ))}
+    </ul>
+    </div>
+)    
 }
 
-export default ListComponent
+export default ListComponent;

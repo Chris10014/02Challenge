@@ -2,41 +2,29 @@ import { useState, useEffect } from 'react';
 import List from "./ListComponent";
 
 function App() {
-  const API_URL = "https://jsonplaceholder.typicode.com";
+  const API_URL = "https://jsonplaceholder.typicode.com/";
 
-  const [ressource, setRessource] = useState("");
-  const [selectedRessource, setSelectedRessource] = useState([]);
-  const [fetchError, setFetchError] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)  
+  const [ressource, setRessource] = useState("users");
+  const [items, setitems] = useState([]);
 
   useEffect(() => {
 
     const fetchRessource = async () => {
       try {
-        const response = await fetch(`${API_URL}/${ressource}`);
+        const response = await fetch(`${API_URL}${ressource}`);
         if(!response.ok) throw Error("Did not receive expected data.")
-        const listRessource = await response.json();
-        setSelectedRessource(listRessource)
-        setFetchError(null);
+        const data = await response.json();
+        setitems(data)       
       } catch (err) {
-        setFetchError(err.message)
-      } finally {
-        setIsLoading(false);
-      }
+       console.log(err)
+      } 
     }
+    fetchRessource();    
   }, [ressource])
 
   return (
-    <div className="App">
-     <main>
-        {isLoading && <p>Loading items ...</p>}
-        {fetchError && <p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>}
-        {!fetchError && !isLoading && 
-          <List
-            setRessource={setRessource}
-            selectedRessource={selectedRessource}
-          />}
-      </main>
+    <div className="App">    
+          <List ressource={ressource} items={items} setRessource={setRessource} />    
     </div>
   );
 }
