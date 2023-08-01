@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import List from "./ListComponent";
+import Form from "./FormComponent";
 
 function App() {
   const API_URL = "https://jsonplaceholder.typicode.com/";
@@ -23,8 +24,9 @@ function App() {
   }, [ressource])
 
   return (
-    <div className="App">    
-          <List ressource={ressource} items={items} setRessource={setRessource} />    
+    <div className="App">
+        <Form ressource={ressource} setRessource={setRessource} />  
+        <List ressource={ressource} setRessource={setRessource} items={items} />    
     </div>
   );
 }
